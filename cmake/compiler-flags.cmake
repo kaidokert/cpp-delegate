@@ -1,0 +1,55 @@
+set(GCC_EXTRA_WARNINGS
+  abi-tag
+  conditionally-supported
+  double-promotion
+  logical-op
+  noexcept
+  strict-null-sentinel
+  suggest-attribute=const
+  suggest-attribute=format
+  suggest-attribute=noreturn
+  suggest-attribute=pure
+  trampolines
+  unsafe-loop-optimizations
+  useless-cast
+  vector-operation-performance
+  zero-as-null-pointer-constant
+)
+
+set(CLANG_EXTRA_WARNINGS
+  everything
+  no-c++98-compat
+  no-c++98-compat-pedantic
+  no-unknown-pragmas
+)
+
+set(CXX_ALL_WARNINGS
+  ctor-dtor-privacy
+  conversion
+  cast-align
+  cast-qual
+  date-time
+  disabled-optimization
+  error
+  float-conversion
+  float-equal
+  format-nonliteral
+  format-security
+  format-y2k
+  inline
+  missing-braces
+  missing-declarations
+  old-style-cast
+  overloaded-virtual
+  padded
+  packed
+  redundant-decls
+  shadow
+  sign-conversion
+  sign-promo
+  stack-protector
+  switch-default
+  switch-enum
+  synth
+  unused-macros
+)

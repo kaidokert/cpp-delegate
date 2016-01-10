@@ -1,0 +1,49 @@
+language: cpp
+
+sudo: false
+
+env:
+  matrix:
+    - COMPILER=g++-4.9 COVERAGE=coverage GCOV=gcov-4.9
+    - COMPILER=g++-5
+    - COMPILER=clang++-3.6
+    - COMPILER=clang++-3.7
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode6.4
+      env: COMPILER='clang++'
+    - os: osx
+      osx_image: xcode7
+      env: COMPILER='clang++'
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise
+      - llvm-toolchain-precise-3.6
+      - llvm-toolchain-precise-3.7
+    packages:
+      - g++-4.9
+      - g++-5
+      - clang-3.6
+      - clang-3.7
+
+install:
+  - if test -n "$COVERAGE"; then pip install --user cpp-coveralls; fi
+  - if [ $TRAVIS_OS_NAME == osx ]; then brew update ; brew unlink cmake ; brew install cmake28; fi
+
+before_script:
+  - export CXX=$COMPILER
+
+script:
+  - mkdir cmake-build; cd cmake-build
+  - cmake .. -DCMAKE_CXX_COMPILER=$CXX -DCOVERAGE=$COVERAGE
+  - make VERBOSE=1 $COVERAGE
+  - make all $COVERAGE
+  - cd ..
+
+after_success:
+  - if test -n "$COVERAGE"; then coveralls --verbose --gcov-options '\-lp' --gcov '$GCOV' -E cmake-build/CMakefiles; fi
