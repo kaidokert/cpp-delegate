@@ -10,16 +10,17 @@ Implementation patterned after version from this [smart function pointer article
 
 Use primarily through CREATE_DELEGATE macro:
 ```cpp
-struct {
-  bool memberfunction(int param)  {...}
+struct foo {
+	bool bar(int param) {  }
 };
-bool free_function(int param) {...}
+bool baz(int param) { }
 
-auto delegate = CREATE_DELEGATE(&class::memberfunction, &class_instance);
+foo foo_instance;
+auto delegate = CREATE_DELEGATE(&foo::bar, &foo_instance);
 delegate(42);
-delegate = CREATE_DELEGATE(&free_function);
+delegate = CREATE_DELEGATE(&baz);
 delegate(90210);
-Delegate<bool (int)> call_me_maybe = delegate;
+Delegate<bool(int)> call_me_maybe = delegate;
 call_me_maybe(31337);
 ```
 
