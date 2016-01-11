@@ -12,26 +12,27 @@ int main(int, char **) {
 using std::cout;
 using std::endl;
 
-volatile static bool dummy = false;
+static volatile bool dummy = false;
 
 struct large {
     int lots_of_bits[16384 + 1];
 };
 
-bool demo_free(int para, int &byref);
-bool demo_free(int para, int &byref) {
+bool demo_free(int para, int const &byref);
+bool demo_free(int para, int const &byref) {
     cout << "Executed free function " << para << " " << byref << endl;
     return dummy;
 }
 
 struct struct_1 {
-    bool demo(int para, int &byref) {
+    bool demo(int para, int const &byref) {
         cout << "Executed member 1 " << para << " " << byref << endl;
         return dummy;
     }
 };
+
 struct struct_2 {
-    bool demo2(int para, int &byref) {
+    bool demo2(int para, int const &byref) {
         cout << "Executed member 2 " << para << " " << byref << endl;
         return dummy;
     }
@@ -80,13 +81,17 @@ void delegate_test() {
 
 #pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
 
-volatile static void * p = nullptr;
+/* LCOV_EXCL_START */
+
+static volatile void * p = nullptr;
 void* operator new(std::size_t) {
     cout << "No allocations, sire" << endl;
     return const_cast<void *>(p);
 }
-#if !defined(_MSC_VER) || (_MSC_VER > 1800) // missing noexcept
+#if !defined(_MSC_VER) || (_MSC_VER > 1800)  // missing noexcept
 void operator delete(void* ptr) noexcept {
     p = ptr;
 }
 #endif
+
+/* LCOV_EXCL_END */

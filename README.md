@@ -11,3 +11,4 @@ Built with maximum warnings on gcc, clang, msvc. Full test coverage to be added.
 ### TODO
 * Add [Catch](https://github.com/philsquared/Catch) / [Lest](https://github.com/martinmoene/lest) tests
 * add gcc/arm build
+* add cpplint
