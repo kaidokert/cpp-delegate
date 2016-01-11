@@ -43,9 +43,9 @@ struct struct_2 {
         bits.lots_of_bits[0] = 42;
         cout << "No bits were harmed " << bits.lots_of_bits[0] << endl;
     }
-	void const_demo(int para) const {
-		cout << "Const here, didnt do much " << para << endl;
-	}
+    void const_demo(int para) const {
+        cout << "Const here, didnt do much " << para << endl;
+    }
 };
 
 void delegate_test() {
@@ -79,9 +79,9 @@ void delegate_test() {
     auto large_2 = CREATE_DELEGATE(&struct_2::eats_bits_whole, &test_2);
     large_2(bits);
 
-	// make a const delegate and call it
-	auto const_delegate = CREATE_DELEGATE(&struct_2::const_demo, &test_2);
-	const_delegate(angstroms);
+    // make a const delegate and call it
+    auto const_delegate = CREATE_DELEGATE(&struct_2::const_demo, &test_2);
+    const_delegate(angstroms);
 }
 
 // global new/delete overrides to make sure no allocations happen
