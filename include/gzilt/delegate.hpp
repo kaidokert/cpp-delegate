@@ -48,6 +48,22 @@ public:
     }
 };
 
+template< typename ReturnType, class T, typename... Arguments >
+class DelegateConstMemberFunction {
+	DelegateConstMemberFunction() = delete;
+	template< ReturnType(T::*ConstMemberFunction)(Arguments...) const >
+	static ReturnType caller(const void * object, Arguments... arguments) {
+		auto callee = static_cast<const T*>(object);
+		return (callee->*ConstMemberFunction)(arguments...);
+	}
+public:
+	template< ReturnType(T::*ConstMemberFunction)(Arguments...) const >
+	static Delegate< ReturnType(Arguments...) > bind(T * object, bool /*unused*/ = false) {
+		auto static_caller = &DelegateConstMemberFunction::caller<ConstMemberFunction>;
+		return Delegate< ReturnType(Arguments...) >(static_caller, static_cast<const void*>(object));
+	}
+};
+
 template< typename ReturnType, typename... Arguments >
 class DelegateFreeFunction {
     DelegateFreeFunction() = delete;
@@ -70,6 +86,11 @@ template< typename ReturnType, class Class, typename... Arguments >
 struct DelegateMatcher< ReturnType(Class::*)(Arguments...) > {
     using DelegateType = DelegateMemberFunction< ReturnType, Class, Arguments...>;
     DelegateMatcher() = delete;
+};
+template< typename ReturnType, class Class, typename... Arguments >
+struct DelegateMatcher< ReturnType(Class::*)(Arguments...) const > {
+	using DelegateType = DelegateConstMemberFunction< ReturnType, Class, Arguments...>;
+	DelegateMatcher() = delete;
 };
 template< typename ReturnType, typename... Arguments >
 struct DelegateMatcher< ReturnType(*)(Arguments...) > {
