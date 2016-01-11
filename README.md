@@ -1,6 +1,6 @@
 # Delegate
 
-[![Travis Status](https://travis-ci.org/kaidokert/cpp-delegate?branch=master)](https://travis-ci.org/kaidokert/cpp-delegate) [![Appveyor Status](https://ci.appveyor.com/api/projects/status/6k3s500lbwlrc03e?svg=true)](https://ci.appveyor.com/project/kaidokert/cpp-delegate) [![Coverage Status](https://coveralls.io/repos/kaidokert/cpp-delegate/badge.svg)](https://coveralls.io/github/kaidokert/cpp-delegate)
+[![Travis Status](https://travis-ci.org/kaidokert/cpp-delegate.svg?branch=master)](https://travis-ci.org/kaidokert/cpp-delegate) [![Appveyor Status](https://ci.appveyor.com/api/projects/status/6k3s500lbwlrc03e?svg=true)](https://ci.appveyor.com/project/kaidokert/cpp-delegate) [![Coverage Status](https://coveralls.io/repos/kaidokert/cpp-delegate/badge.svg?branch=master&service=github)](https://coveralls.io/github/kaidokert/cpp-delegate)
 
 Elbert Mai's [generic callback/delegate](http://www.codeproject.com/Articles/136799/Lightweight-Generic-C-Callbacks-or-Yet-Another-Del), C++11 with no other dependencies except ``<utility>``. No exceptions/rtti/heap usage, and just about 100 lines of code.
 
