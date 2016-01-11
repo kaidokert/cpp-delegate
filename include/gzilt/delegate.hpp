@@ -15,7 +15,6 @@ class Delegate< ReturnType(Arguments...) > {
     FunctionPtrType delegated_function_;
     const void * this_ptr_;
 
-    Delegate() = delete;
 public:
     Delegate(FunctionPtrType delegated_function, const void* this_ptr) :
         delegated_function_(delegated_function),
@@ -28,13 +27,15 @@ public:
     ReturnType operator()(ForwardArguments&&... arguments) const {
         return invoke(std::forward<ForwardArguments>(arguments)...);
     }
+	Delegate() = delete;
 };
 
 namespace detail {
 
 template< typename ReturnType, class Class, typename... Arguments >
 class DelegateMemberFunction {
-    DelegateMemberFunction() = delete;
+	using TargetDelegate = Delegate< ReturnType(Arguments...) >;
+
     template< ReturnType(Class::*MemberFunction)(Arguments...) >
     static ReturnType caller(const void * this_ptr, Arguments... arguments) {
         auto callee = const_cast<Class *> (static_cast<const Class *>(this_ptr));
@@ -44,13 +45,15 @@ public:
     template< ReturnType(Class::*MemberFunction)(Arguments...) >
     static Delegate< ReturnType(Arguments...) > bind(Class * this_ptr, bool /*unused*/ = false) {
         auto static_caller = &DelegateMemberFunction::caller<MemberFunction>;
-        return Delegate< ReturnType(Arguments...) >(static_caller, static_cast<const void *>(this_ptr));
+        return TargetDelegate(static_caller, static_cast<const void *>(this_ptr));
     }
+	DelegateMemberFunction() = delete;
 };
 
 template< typename ReturnType, class Class, typename... Arguments >
 class DelegateConstMemberFunction {
-	DelegateConstMemberFunction() = delete;
+	using TargetDelegate = Delegate< ReturnType(Arguments...) >;
+
 	template< ReturnType(Class::*ConstMemberFunction)(Arguments...) const >
 	static ReturnType caller(const void * this_ptr, Arguments... arguments) {
 		auto callee = static_cast<const Class*>(this_ptr);
@@ -60,14 +63,16 @@ public:
 	template< ReturnType(Class::*ConstMemberFunction)(Arguments...) const >
 	static Delegate< ReturnType(Arguments...) > bind(Class * this_ptr, bool /*unused*/ = false) {
 		auto static_caller = &DelegateConstMemberFunction::caller<ConstMemberFunction>;
-		return Delegate< ReturnType(Arguments...) >(static_caller, static_cast<const void*>(this_ptr));
+		return TargetDelegate(static_caller, static_cast<const void*>(this_ptr));
 	}
+	DelegateConstMemberFunction() = delete;
 };
 
 template< typename ReturnType, typename... Arguments >
 class DelegateFreeFunction {
-    DelegateFreeFunction() = delete;
-    template< ReturnType(*FreeFunction)(Arguments... arguments) >
+	using TargetDelegate = Delegate< ReturnType(Arguments...) >;
+
+	template< ReturnType(*FreeFunction)(Arguments... arguments) >
     static ReturnType caller(const void * /*unused*/, Arguments... arguments) {
         return (*FreeFunction)(arguments...);
     }
@@ -75,8 +80,9 @@ public:
     template< ReturnType(*FreeFunction)(Arguments... arguments) >
     static Delegate< ReturnType(Arguments...) > bind(bool /*unused*/ = false) {
         auto static_caller = &DelegateFreeFunction::caller<FreeFunction>;
-        return Delegate< ReturnType(Arguments...) >(static_caller, nullptr);
+        return TargetDelegate(static_caller, nullptr);
     }
+	DelegateFreeFunction() = delete;
 };
 
 template< typename FunctionSignature >
