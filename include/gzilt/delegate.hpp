@@ -36,15 +36,15 @@ template< typename ReturnType, class T, typename... Arguments >
 class DelegateMemberFunction {
     DelegateMemberFunction() = delete;
     template< ReturnType(T::*MemberFunction)(Arguments...) >
-    static ReturnType caller(const void * object, Arguments... arguments) {
-        auto callee = const_cast<T *> (static_cast<const T *>(object));
+    static ReturnType caller(const void * this_ptr, Arguments... arguments) {
+        auto callee = const_cast<T *> (static_cast<const T *>(this_ptr));
         return (callee->*MemberFunction)(arguments ...);
     }
 public:
     template< ReturnType(T::*MemberFunction)(Arguments...) >
-    static Delegate< ReturnType(Arguments...) > bind(T * object, bool /*unused*/ = false) {
+    static Delegate< ReturnType(Arguments...) > bind(T * this_ptr, bool /*unused*/ = false) {
         auto static_caller = &DelegateMemberFunction::caller<MemberFunction>;
-        return Delegate< ReturnType(Arguments...) >(static_caller, static_cast<const void *>(object));
+        return Delegate< ReturnType(Arguments...) >(static_caller, static_cast<const void *>(this_ptr));
     }
 };
 
@@ -52,15 +52,15 @@ template< typename ReturnType, class T, typename... Arguments >
 class DelegateConstMemberFunction {
 	DelegateConstMemberFunction() = delete;
 	template< ReturnType(T::*ConstMemberFunction)(Arguments...) const >
-	static ReturnType caller(const void * object, Arguments... arguments) {
-		auto callee = static_cast<const T*>(object);
+	static ReturnType caller(const void * this_ptr, Arguments... arguments) {
+		auto callee = static_cast<const T*>(this_ptr);
 		return (callee->*ConstMemberFunction)(arguments...);
 	}
 public:
 	template< ReturnType(T::*ConstMemberFunction)(Arguments...) const >
-	static Delegate< ReturnType(Arguments...) > bind(T * object, bool /*unused*/ = false) {
+	static Delegate< ReturnType(Arguments...) > bind(T * this_ptr, bool /*unused*/ = false) {
 		auto static_caller = &DelegateConstMemberFunction::caller<ConstMemberFunction>;
-		return Delegate< ReturnType(Arguments...) >(static_caller, static_cast<const void*>(object));
+		return Delegate< ReturnType(Arguments...) >(static_caller, static_cast<const void*>(this_ptr));
 	}
 };
 
