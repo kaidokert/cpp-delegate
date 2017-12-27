@@ -59,9 +59,6 @@ matrix:
           sources:
             - llvm-toolchain-trusty-5.0
 
-cache:
-    apt: true
-
 before_install:
   - cmake --version
   - g++ --version
