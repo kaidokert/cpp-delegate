@@ -1,7 +1,5 @@
 language: cpp
 
-sudo: false
-
 matrix:
   include:
     - os: osx
@@ -49,30 +47,21 @@ matrix:
           packages:
             - clang-4.0
           sources:
-            - lvm-toolchain-trusty-4.0
+            - llvm-toolchain-trusty-4.0
     - env: COMPILER='clang++-5.0'
       addons:
         apt:
           packages:
             - clang-5.0
           sources:
-            - lvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-5.0
     - env: COMPILER='clang++-6.0'
       addons:
         apt:
           packages:
             - clang-6.0
           sources:
-            - lvm-toolchain-trusty-5.0
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty
-      - llvm-toolchain-trusty-3.9
-      - llvm-toolchain-trusty-4.0
-      - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-5.0
 
 before_install:
   - cmake --version
@@ -85,7 +74,8 @@ before_install:
 
 install:
   - if test -n "$COVERAGE"; then pip install --user cpp-coveralls; fi
-  - if [ $TRAVIS_OS_NAME == osx ]; then brew update > /dev/null ; brew upgrade cmake; fi
+  # not necessary aymore, cmake is modern
+  # - if [ $TRAVIS_OS_NAME == osx ]; then brew update > /dev/null ; brew upgrade cmake; fi
 
 before_script:
   - export CXX=$COMPILER
