@@ -37,7 +37,7 @@ matrix:
         apt:
           packages:
             - clang-6.0
-            
+
 addons:
   apt:
     sources:
@@ -57,9 +57,9 @@ before_install:
   - g++ --version
   - clang++ --version
   - if [ $TRAVIS_OS_NAME == linux ]; then
-  apt-cache search "clang" | egrep "^clang-[0-9\.]+ ";
-  apt-cache search "g++" | egrep "^g\+\+-[0-9\.]+ "
-  fi
+    apt-cache search "clang" | egrep "^clang-[0-9\.]+ ";
+    apt-cache search "g++" | egrep "^g\+\+-[0-9\.]+ "
+    fi
 
 install:
   - if test -n "$COVERAGE"; then pip install --user cpp-coveralls; fi
