@@ -55,13 +55,6 @@ matrix:
             - clang-5.0
           sources:
             - llvm-toolchain-trusty-5.0
-    - env: COMPILER='clang++-6.0'
-      addons:
-        apt:
-          packages:
-            - clang-6.0
-          sources:
-            - llvm-toolchain-trusty-5.0
 
 before_install:
   - cmake --version
