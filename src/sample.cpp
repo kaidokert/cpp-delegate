@@ -86,7 +86,7 @@ void delegate_test() {
 
 // global new/delete overrides to make sure no allocations happen
 
-#if __clang__
+#if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wunknown-warning-option"
 #endif
 #pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
@@ -104,4 +104,4 @@ void operator delete(void* ptr) noexcept {
 }
 #endif
 
-/* LCOV_EXCL_END */
+/* LCOV_EXCL_STOP */
