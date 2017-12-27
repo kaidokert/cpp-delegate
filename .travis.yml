@@ -2,13 +2,6 @@ language: cpp
 
 sudo: false
 
-env:
-  matrix:
-    - COMPILER=g++-4.9 COVERAGE=coverage GCOV=gcov-4.9
-    - COMPILER=g++-5
-    - COMPILER=g++-6
-    - COMPILER=g++-7
-
 matrix:
   include:
     - os: osx
@@ -17,8 +10,28 @@ matrix:
     - os: osx
       osx_image: xcode7
       env: COMPILER='clang++'
+    - env: COMPILER=g++-4.9 COVERAGE=coverage GCOV=gcov-4.9
+      addons:
+        apt:
+          packages:
+            - g++-4.9
+    - env: COMPILER=g++-5
+      addons:
+        apt:
+          packages:
+            - g++-5
+    - env: COMPILER=g++-6
+      addons:
+        apt:
+          packages:
+            - g++-6
+    - env: COMPILER=g++-7
+      addons:
+        apt:
+          packages:
+            - g++-7
     - env: COMPILER='clang++-3.9'
-      addons: # because clang3.9 doesnt install together with 4-6
+      addons:
         apt:
           packages:
             - clang-3.9
@@ -46,11 +59,6 @@ addons:
       - llvm-toolchain-trusty-3.9
       - llvm-toolchain-trusty-4.0
       - llvm-toolchain-trusty-5.0
-    packages:
-      - g++-4.9
-      - g++-5
-      - g++-6
-      - g++-7
 
 before_install:
   - cmake --version
@@ -58,7 +66,7 @@ before_install:
   - clang++ --version
   - if [ $TRAVIS_OS_NAME == linux ]; then
     apt-cache search "clang" | egrep "^clang-[0-9\.]+ ";
-    apt-cache search "g++" | egrep "^g\+\+-[0-9\.]+ "
+    apt-cache search "g++" | egrep "^g\+\+-[0-9\.]+ ";
     fi
 
 install:
