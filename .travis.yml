@@ -22,18 +22,23 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-precise
-      - llvm-toolchain-precise-3.6
-      - llvm-toolchain-precise-3.7
+      - llvm-toolchain-trusty
+      - llvm-toolchain-trusty-3.9
+      - llvm-toolchain-trusty-4.0
+      - llvm-toolchain-trusty-5.0
     packages:
       - g++-4.9
       - g++-5
-      - clang-3.6
-      - clang-3.7
+      - g++-6
+      - g++-7
+      - clang-3.9
+      - clang-4.0
+      - clang-5.0
+      - clang-6.0
 
 install:
   - if test -n "$COVERAGE"; then pip install --user cpp-coveralls; fi
-  - if [ $TRAVIS_OS_NAME == osx ]; then brew update > /dev/null ; brew install cmake; fi
+  - if [ $TRAVIS_OS_NAME == osx ]; then brew update > /dev/null ; brew upgrade cmake; fi
 
 before_script:
   - export CXX=$COMPILER
