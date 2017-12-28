@@ -5,15 +5,32 @@ set(GCC_EXTRA_WARNINGS
   logical-op
   noexcept
   strict-null-sentinel
+  suggest-attribute=cold
   suggest-attribute=const
   suggest-attribute=format
   suggest-attribute=noreturn
   suggest-attribute=pure
+  suggest-attribute=malloc
   trampolines
   unsafe-loop-optimizations
   useless-cast
   vector-operation-performance
   zero-as-null-pointer-constant
+  
+#experimentals as of gcc-7
+  #aggregate-return # way too exciting
+  duplicated-cond
+  format-signedness
+  invalid-pch
+  missing-include-dirs
+  multiple-inheritance
+  null-dereference
+  strict-overflow
+  suggest-final-methods
+  suggest-final-types
+  suggest-override
+  undef
+  virtual-inheritance
 )
 
 set(CLANG_EXTRA_WARNINGS
