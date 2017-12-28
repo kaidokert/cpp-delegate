@@ -1,11 +1,10 @@
 language: cpp
 
-_sources:
-  - &repos
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-trusty
-    - llvm-toolchain-trusty-4.0
-    - llvm-toolchain-trusty-5.0
+_sources: &repos
+  - ubuntu-toolchain-r-test
+  - llvm-toolchain-trusty
+  - llvm-toolchain-trusty-4.0
+  - llvm-toolchain-trusty-5.0
 
 matrix:
   include:
