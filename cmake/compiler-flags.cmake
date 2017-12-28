@@ -5,10 +5,12 @@ set(GCC_EXTRA_WARNINGS
   logical-op
   noexcept
   strict-null-sentinel
+  suggest-attribute=cold
   suggest-attribute=const
   suggest-attribute=format
   suggest-attribute=noreturn
   suggest-attribute=pure
+  suggest-attribute=malloc
   trampolines
   unsafe-loop-optimizations
   useless-cast
