@@ -1,5 +1,12 @@
 language: cpp
 
+_sources:
+  - &repos
+    - ubuntu-toolchain-r-test
+    - llvm-toolchain-trusty
+    - llvm-toolchain-trusty-4.0
+    - llvm-toolchain-trusty-5.0
+
 matrix:
   include:
     - os: osx
@@ -15,22 +22,22 @@ matrix:
       addons:
         apt:
           packages: ['g++-4.9']
-          sources: ['ubuntu-toolchain-r-test']
+          sources: *repos
     - env: COMPILER=g++-5
       addons:
         apt:
           packages: ['g++-5']
-          sources: ['ubuntu-toolchain-r-test']
+          sources: *repos
     - env: COMPILER=g++-6
       addons:
         apt:
           packages: ['g++-6']
-          sources: ['ubuntu-toolchain-r-test']
+          sources: *repos
     - env: COMPILER=g++-7
       addons:
         apt:
           packages: ['g++-7']
-          sources: ['ubuntu-toolchain-r-test']
+          sources: *repos
     - env: COMPILER='clang++-3.9'
       addons:
         apt:
@@ -39,17 +46,17 @@ matrix:
       addons:
         apt:
           packages: ['clang-4.0']
-          sources: ['llvm-toolchain-trusty-4.0']
+          sources: *repos
     - env: COMPILER='clang++-5.0'
       addons:
         apt:
           packages: ['clang-5.0']
-          sources: ['llvm-toolchain-trusty-5.0']
+          sources: *repos
     - env: COMPILER='clang++-6.0'
       addons:
         apt:
           packages: ['clang-6.0']
-          sources: ['llvm-toolchain-trusty','ubuntu-toolchain-r-test']
+          sources: *repos
 
 before_install:
   - cmake --version
@@ -62,7 +69,7 @@ before_install:
 
 install:
   - if test -n "$COVERAGE"; then pip install --user cpp-coveralls; fi
-  # not necessary aymore, cmake is modern
+  # not necessary anymore, cmake is modern
   # - if [ $TRAVIS_OS_NAME == osx ]; then brew update > /dev/null ; brew upgrade cmake; fi
 
 before_script:
