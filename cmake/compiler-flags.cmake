@@ -24,6 +24,7 @@ set(CLANG_EXTRA_WARNINGS
 )
 
 set(CXX_ALL_WARNINGS
+  attributes
   ctor-dtor-privacy
   conversion
   cast-align
