@@ -16,6 +16,22 @@ set(GCC_EXTRA_WARNINGS
   useless-cast
   vector-operation-performance
   zero-as-null-pointer-constant
+  
+#experimentals as of gcc-7
+  aggregate-return
+  assign-intercept
+  duplicated-cond
+  format-signedness
+  invalid-pch
+  missing-include-dirs
+  multiple-inheritance
+  null-dereference
+  strict-overflow
+  suggest-final-methods
+  suggest-final-types
+  suggest-override
+  undef
+  virtual-inheritance
 )
 
 set(CLANG_EXTRA_WARNINGS
