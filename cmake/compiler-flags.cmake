@@ -18,8 +18,7 @@ set(GCC_EXTRA_WARNINGS
   zero-as-null-pointer-constant
   
 #experimentals as of gcc-7
-  aggregate-return
-  assign-intercept
+  #aggregate-return # way too exciting
   duplicated-cond
   format-signedness
   invalid-pch
