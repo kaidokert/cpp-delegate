@@ -16,6 +16,8 @@ environment:
       PlatformToolset: v120
     - VisualStudioVersion: 14.0
       PlatformToolset: v140
+    - VisualStudioVersion: 15.0
+      PlatformToolset: v141
 
 build_script:
   - msbuild /p:PlatformToolset="%PlatformToolset%" "delegate.vcxproj"  /logger:"%ProgramFiles%\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
